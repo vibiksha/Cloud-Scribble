@@ -1,0 +1,17 @@
+<app-navbar ></app-navbar>
+<div class="flex justify-center ">
+  <div class="h-10 w-24 cursor-pointer border border-gray-300 bg-gray-100 m-2 rounded-md text-center leading-10 transition-all duration-300"
+       (click)="viewMyPosts()"
+       [ngClass]="{'active-tab': isMyPostsActive}">
+    My Posts
+  </div>
+  <div class="h-10 w-24 cursor-pointer border border-gray-300 bg-gray-100 m-2 rounded-md text-center leading-10 transition-all duration-300"
+       (click)="viewAllPosts()"
+       [ngClass]="{'active-tab': !isMyPostsActive}">
+    All Posts
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+
+

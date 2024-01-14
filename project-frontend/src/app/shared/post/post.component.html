@@ -1,0 +1,110 @@
+<!-- Post Display Component -->
+<div [style.height.px]="disableButton ? 320 : 380" class="bg-white rounded-xl shadow-md p-6 m-6 ">
+  <h3 class="text-xl font-semibold mb-2 uppercase">
+    <a  class="text-blue-600 hover:underline">{{ post.title }}</a>
+  </h3>
+  <div class="flex items-center text-gray-600 mb-2">
+    <i class="fas fa-user mr-2"></i>
+    <p>{{ post.username }}</p>
+  </div>
+  <p class="text-gray-600">Created On: {{ post.createdOn | date }}</p>
+  <hr class="my-4 border-t-2 border-gray-200">
+  <div *ngIf="!disableButton" class="mt-4 space-x-4">
+    <button (click)="deletePost(post.id)" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-md text-xs shadow-md hover:bg-red-600 transition duration-300">Delete Post</button>
+    <button (click)="openEditor(post)" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md text-xs shadow-md hover:bg-blue-600 transition duration-300">Update Post</button>
+  </div>
+  <div class="post-content mt-5" [innerHTML]="getPostContent(post)" style="max-height: 200px; overflow-y: auto;"></div>
+
+  <div *ngIf="post.content.length>150 &&!post.showFull" class="mt-2">
+    <button (click)="showFullContent(post)" class="text-blue-600 text-xs hover:underline focus:outline-none">Read More</button>
+  </div>
+
+
+</div>
+
+<!-- Update Post Model -->
+<div *ngIf="showUpdateModel" class="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-gray-900 bg-opacity-80">
+  <div class="bg-white p-3 mx-auto rounded-md shadow-md max-w-xl w-full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="card bg-white p-3">
+            <div class="card-body">
+              <h3 class="card-title shad text-center mb-4 font-semibold">Update Post</h3>
+              <hr class="mb-2">
+              <form [formGroup]="addPostForm" (ngSubmit)="updatePost()">
+                <div class="mb-3">
+                  <label for="postTitle" class="form-label pr-2">Title:</label>
+                  <input type="text" id="postTitle" formControlName="title" class="form-control" placeholder="Title">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Body</label>
+                  <div [froalaEditor]="editorConfig" [(froalaModel)]="content" (froalaModelChange)="onContentChanged($event)" class="mt-3"></div>
+                </div>
+                <div class="text-center">
+                  <div class="flex justify-center space-x-4">
+                    <button
+                      type="submit"
+                      class="py-2 font-semibold px-4 text-xs rounded focus:outline-none transition-colors duration-300 bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-gray-800"
+                      (click)="cancel()"
+                    >
+                      Cancel Update
+                    </button>
+                    <button
+                      type="submit"
+                      class="py-2 font-semibold px-4 text-xs rounded focus:outline-none transition-colors duration-300"
+                      [class.bg-blue-500]="addPostForm.valid"
+                      [class.bg-gray-300]="addPostForm.invalid"
+                      [class.hover:bg-blue-700]="addPostForm.valid"
+                      [disabled]="addPostForm.invalid"
+                      [class.text-white]="addPostForm.valid"
+                      [class.text-gray-700]="addPostForm.invalid"
+                    >
+                      Update Post
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Read More Model -->
+<div *ngIf="showReadMoreModel" class="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-gray-900 bg-opacity-80">
+  <div class="bg-white p-3 mx-auto rounded-md shadow-md max-w-xl w-full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="card bg-white p-3">
+            <div class="card-body">
+              <div class="bg-white rounded-xl shadow-md p-6 m-6">
+                <h3 class="text-xl font-semibold mb-2 uppercase">
+                  <a [routerLink]="['/post', post.id]" class="text-blue-600 hover:underline">{{ post.title }}</a>
+                </h3>
+                <div class="flex items-center text-gray-600 mb-2">
+                  <i class="fas fa-user mr-2"></i>
+                  <p>{{ post.username }}</p>
+                </div>
+                <p class="text-gray-600">Created On: {{ post.createdOn | date }}</p>
+                <hr class="my-4 border-t-2 border-gray-200">
+                <div class="post-content" [innerHTML]="post.content"></div>
+                <div *ngIf="post.showFull" class="mt-2">
+                  <button (click)="showTruncatedContent(post)" class="text-blue-600 text-xs hover:underline focus:outline-none">Hide</button>
+                </div>
+                <div *ngIf="!disableButton" class="mt-4 space-x-4">
+                  <button (click)="deletePost(post.id)" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-md text-xs shadow-md hover:bg-red-600 transition duration-300">Delete Post</button>
+                  <button (click)="openEditor(post)" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md text-xs shadow-md hover:bg-blue-600 transition duration-300">Update Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="h-16 shadow-md flex bg-gray-800 text-white relative">
+  <div class="flex-1 flex items-center justify-center md:justify-center">
+    <h1 class="text-lg font-bold md:text-center">Tales of Trails</h1>
+  </div>
+  <div class="flex ml-auto items-center space-x-8">
+    <div class="flex items-center justify-center" (click)="togglePlusModal()">
+      <i class="fa-solid fa-plus fa-lg text-white"></i>
+    </div>
+    <div class="flex items-center justify-center pr-4" (click)="toggleUserModal()">
+      <i class="fa-solid fa-user fa-lg text-white"></i>
+    </div>
+    <!-- <div class=" items-center justify-center pr-4" (click)="toggleTabMenu()">
+      <i class="fa-solid fa-bars fa-lg text-white"></i>
+    </div> -->
+    <!-- <div *ngIf="isTabMenuOpen" class="absolute top-16 right-0 z-50 bg-white rounded-md shadow-lg p-2 space-y-2">
+      <button class="flex items-center text-gray-800 text-sm rounded-md px-2 py-1" (click)="viewMyPosts()">
+        <i class="fa-solid fa-user-plus fa-lg mr-2"></i>
+        View My Posts
+      </button>
+      <button class="flex items-center text-gray-800 text-sm rounded-md px-2 py-1"(click)="viewAllPosts()">
+        <i class="fa-solid fa-eye fa-lg mr-2"></i>
+        View All Posts
+      </button>
+    </div> -->
+  </div>
+</div>
+
+
+<div *ngIf="showUserModal" class="fixed top-20 right-4 z-50 bg-white rounded shadow-lg p-4 max-w-xs">
+  <div class="flex flex-col">
+    <div class="flex flex-row"(click)="toggleUserModal()">
+      <button class="close-button mb-4 pr-2" >
+        <i class="far fa-times-circle fa-lg"></i>
+      </button>
+      <span class="mb-4">Close</span>
+    </div>
+    <div class="flex flex-row"(click)="logout()">
+      <button class="logout-button mb-2 pr-2">
+        <i class="fas fa-sign-out-alt fa-lg"></i>
+      </button>
+      <span>Logout</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showAddImageModal" class="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-gray-900 bg-opacity-80">
+  <div class="bg-white p-3 mx-auto rounded-md shadow-md max-w-xl w-full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="card bg-white p-3">
+            <div class="card-body">
+              <h3 class="card-title shad text-center mb-4 font-semibold">Create New Post</h3>
+              <hr class="mb-2">
+              <form [formGroup]="addPostForm" (ngSubmit)="addPost()">
+                <div class="mb-3">
+                  <label for="postTitle" class="form-label pr-2">Title:</label>
+                  <input type="text" id="postTitle" formControlName="title" class="form-control" placeholder="Title">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Body</label>
+                  <div [froalaEditor]="editorConfig" [(froalaModel)]="content" (froalaModelChange)="onContentChanged($event)" class="mt-3"></div>
+                </div>
+                <div class="text-center">
+                  <div class="flex justify-center space-x-4">
+                    <button
+                      type="submit"
+                      class="py-2 font-semibold px-4 text-xs rounded focus:outline-none transition-colors duration-300 bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-gray-800"
+                      (click)="cancel()"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="py-2 font-semibold px-4 text-xs rounded focus:outline-none transition-colors duration-300"
+                      [class.bg-blue-500]="addPostForm.valid"
+                      [class.bg-gray-300]="addPostForm.invalid"
+                      [class.hover:bg-blue-700]="addPostForm.valid"
+                      [disabled]="addPostForm.invalid"
+                      [class.text-white]="addPostForm.valid"
+                      [class.text-gray-700]="addPostForm.invalid"
+                    >
+                      Post
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

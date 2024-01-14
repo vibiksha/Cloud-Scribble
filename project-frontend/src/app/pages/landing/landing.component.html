@@ -1,0 +1,22 @@
+<nav class="bg-gray-800 text-white p-4">
+  <div class="container mx-auto flex items-center justify-between">
+    <a routerLink="/" class="text-2xl font-bold">NarrativeNest</a>
+    <ul class="flex space-x-4">
+      <li><a routerLink="/auth/login" class=" hover:text-blue-600 font-semibold py-2 px-4 rounded transition duration-300">Sign In</a></li>
+      <li><a routerLink="/auth/signup" class=" hover:text-blue-600 font-semibold py-2 px-4 rounded transition duration-300">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <app-post *ngFor="let post of posts" [post]="post" [disableButton]="true"></app-post>
+    </div>
+  </div>
+</div>
+
+
+
+
+
