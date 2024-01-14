@@ -23,7 +23,7 @@ public class CognitoUserDetailsService implements UserDetailsService {
     public CognitoUserDetailsService() {
         this.cognitoClient = CognitoIdentityProviderClient.builder()
                 .region(Region.AP_SOUTHEAST_2) // Replace with your AWS region
-                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("AKIAQMQEANMMQ76OIKG4", "2+STmO+PA0ie1Upgmz69ThooT8qxd/e0TqkLXHou")))
+                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("", "")))
                 .build();
     }
 
